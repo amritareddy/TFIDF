@@ -8,7 +8,7 @@ class Reader:
         return text
 
     def lines(self, text):
-        return lines = text.split('\n')
+        return text.split('\n')
 
     def tokenize(self, text):
         clear_text = self.normalize(text)
