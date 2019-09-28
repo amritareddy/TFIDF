@@ -12,7 +12,7 @@ class Reader:
 
     def tokenize(self, text):
         clear_text = self.normalize(text)
-        return tokens = clear_text.split()
+        return clear_text.split()
 
     def normalize(self, text):
         lower_text = text.lower()
