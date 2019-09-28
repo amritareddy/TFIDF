@@ -51,17 +51,17 @@ class Overlap:
 
         docs_terms = {}
         for doc in docs_list:
-            tokens = tokenize(doc)
+            tokens = reader.tokenize(doc)
             docs_terms[tokens[0]] = reader.get_word_counts(tokens)
 
         qrys_terms = {}
         for qry in qrys_list:
-            tokens = tokenize(qrys)
+            tokens = reader.tokenize(qrys)
             qrys_terms[tokens[0]] = reader.get_word_counts(tokens)
 
         for query_id, query_dict in qrys_terms:
             for doc_id, doc_dict in docs_terms:
-                score = compare(query_dict, doc_dict)
+                score = self.compare(query_dict, doc_dict)
                 self.scores.append(""+query_id+"\t"+doc_id+ "\t" + score + "\n")
 
         reader.save_scores(self.scores, 'overlap.txt')
