@@ -53,13 +53,15 @@ class Overlap:
         for doc in docs_list:
             tokens = reader.tokenize(doc)
             if(len(tokens) > 0):
-                docs_terms[tokens[0]] = reader.get_word_counts(tokens)
+                docs_terms[tokens[0]] = tokens
+                # docs_terms[tokens[0]] = reader.get_word_counts(tokens)
 
         qrys_terms = {}
         for qry in qrys_list:
             tokens = reader.tokenize(qry)
             if(len(tokens) > 0):
-                qrys_terms[tokens[0]] = reader.get_word_counts(tokens)
+                qrys_terms[tokens[0]] = tokens
+            #     qrys_terms[tokens[0]] = reader.get_word_counts(tokens)
 
 
         for query_id, query_dict in qrys_terms.items():
@@ -77,6 +79,8 @@ class Overlap:
         score = 0
 
         for word in qry:
-            score += qry[word] * doc.get(word,0)
+            if word in doc
+                score += 1
+            # qry[word] * doc.get(word,0)
 
         return score
