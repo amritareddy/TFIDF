@@ -1,60 +1,32 @@
 import string
-class Reader:
-
-    def read_text(self, file_name):
-        f = open(file_name,'r')
-        text = f.read()
-        f.close()
-        return text
-
-    def lines(self, text):
-        return text.split('\n')
-
-    def tokenize(self, text):
-        clear_text = self.normalize(text)
-        return clear_text.split()
-
-    def normalize(self, text):
-        lower_text = text.lower()
-        translator = str.maketrans('', '', string.punctuation)
-        return lower_text.translate(translator)
-
-    def get_word_counts(self, tokens):
-        word_count_dict = {} #create an empty dictionaryself,
-        #loops through the elements in tokens
-        for i in tokens:
-            if (word_count_dict.get(i,0) == 0):  #Chekcks if token is in the dictionary
-                word_count_dict[i] = 1 #if not it adds it to the dictionary with a value of 1
-            else:
-                word_count_dict[i] += 1 #If it is its value is incremented by 1
-        return word_count_dict
-
-    def save_scores(self, scores, file_name):
-        f1 = open(file_name,"w+")
-        for score in scores:
-               f1.write(score)
-        f1.close()
+from reader import Reader
 
 class Overlap:
 
+    # creates the scores global variable
     def __init__(self):
         self.scores = [];
         self.scores.append("query_id\t doc_id\t score\n")
 
+    # checks if there is an overlap
     def overlap(self):
         reader = Reader();
         docs = reader.read_text('docs.txt')
         qrys = reader.read_text('qrys.txt')
 
+        # breaks the files into separate lines (queries and docs)
         docs_list = reader.lines(docs)
         qrys_list = reader.lines(qrys)
 
+        # tokenizes and records the docs tokenlists into a dictionary,
+        # where key is doc_id and value is list of tokens for that doc
         docs_terms = {}
         for doc in docs_list:
             tokens = reader.tokenize(doc)
             if(len(tokens) > 0):
                 docs_terms[tokens[0]] = tokens
                 # docs_terms[tokens[0]] = reader.get_word_counts(tokens)
+
 
         qrys_terms = {}
         for qry in qrys_list:
@@ -63,14 +35,15 @@ class Overlap:
                 qrys_terms[tokens[0]] = tokens
             #     qrys_terms[tokens[0]] = reader.get_word_counts(tokens)
 
-
+        #compares each query with every document
         for query_id, query_dict in qrys_terms.items():
             for doc_id, doc_dict in docs_terms.items():
                 score = self.compare(query_dict, doc_dict)
                 self.scores.append(query_id+"\t"+doc_id+ "\t" + str(score) + "\n")
 
-        reader.save_scores(self.scores, 'overlap.txt')
+        reader.save_scores(self.scores, 'overlap.top')
 
+    #compares each word in the query with the document and generates a scores for each query
     def compare(self, qry, doc):
         # token[0] is the id of each
         # list of scores - text_id + query_id + score \n
@@ -79,7 +52,7 @@ class Overlap:
         score = 0
 
         for word in qry:
-            if word in doc
+            if word in doc:
                 score += 1
             # qry[word] * doc.get(word,0)
 
