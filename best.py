@@ -11,7 +11,7 @@ class tfidf:
     def tfidf(self):
         reader = Reader();
         docs = reader.read_text('docs.txt')
-        qrys = reader.read_text('qrys.txt')
+        qrys = reader.read_text('test.txt')
 
         # breaks the files into separate lines (queries and docs)
         docs_list = reader.lines(docs)
@@ -67,4 +67,4 @@ class tfidf:
 
                 self.scores.append(query_id+" 0 "+doc_id+ " 0 " + str(score) + " 0 \n")
 
-        reader.save_scores(self.scores, 'tfidf.top')
+        reader.save_scores(self.scores, 'test.top')

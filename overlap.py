@@ -6,7 +6,6 @@ class Overlap:
     # creates the scores global variable
     def __init__(self):
         self.scores = [];
-        self.scores.append("query_id\t doc_id\t score\n")
 
     # checks if there is an overlap
     def overlap(self):
@@ -39,7 +38,7 @@ class Overlap:
         for query_id, query_dict in qrys_terms.items():
             for doc_id, doc_dict in docs_terms.items():
                 score = self.compare(query_dict, doc_dict)
-                self.scores.append(query_id+"\t"+doc_id+ "\t" + str(score) + "\n")
+                self.scores.append(query_id+" 0 "+doc_id+ " 0 " + str(score) + " 0 \n")
 
         reader.save_scores(self.scores, 'overlap.top')
 
