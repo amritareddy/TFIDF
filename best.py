@@ -12,10 +12,12 @@ class tfidf:
         reader = Reader();
         docs = reader.read_text('docs.txt')
         qrys = reader.read_text('qrys.txt')
+        stop_words = reader.read_text('english.stop')
 
         # breaks the files into separate lines (queries and docs)
         docs_list = reader.lines(docs)
         qrys_list = reader.lines(qrys)
+        stop_words_list = reader.lines(stop_words)
 
         global_vocab = {}
         text_size = {}
@@ -26,19 +28,28 @@ class tfidf:
             tokens = reader.tokenize(doc)
             if(len(tokens) > 0):
                 doc_id = tokens[0]
-                # del tokens[0]
-                text_size[doc_id] = len(tokens)
-                collection_len += len(tokens)
+                del tokens[0]
+                text_size[doc_id] = 0;
 
                 for token in tokens:
-                    if token in global_vocab:
-                        term_dict = global_vocab[token]
-                        if(doc_id in term_dict):
-                            term_dict[doc_id] += 1
+                    if token not in stop_words_list:
+                        if token == "references":
+                            break;
+
+                        if(len(token) > 14):
+                            token = token[0:14]
+
+                        text_size[doc_id]+=1;
+                        if token in global_vocab:
+                            term_dict = global_vocab[token]
+                            if(doc_id in term_dict):
+                                term_dict[doc_id] += 1
+                            else:
+                                term_dict[doc_id] = 1
                         else:
-                            term_dict[doc_id] = 1
-                    else:
-                        global_vocab[token] = {doc_id: 1}
+                            global_vocab[token] = {doc_id: 1}
+
+            collection_len += text_size[doc_id]
 
         self.collection_size = len(docs_list)
         self.avg_doc_len = collection_len/self.collection_size
@@ -47,8 +58,14 @@ class tfidf:
         for qry in qrys_list:
             tokens = reader.tokenize(qry)
             if(len(tokens) > 0):
+                for token in tokens:
+                    if token in stop_words_list:
+                        tokens.remove(token)
+                    elif(len(token)>14):
+                        token = token[0:14]
+
                 qry_id = tokens[0]
-                # del tokens[0]
+                del tokens[0]
                 qrys_terms[qry_id] = reader.get_word_counts(tokens)
 
         for query_id, query_dict in qrys_terms.items():
