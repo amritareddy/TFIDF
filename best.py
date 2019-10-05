@@ -11,7 +11,7 @@ class tfidf:
     def tfidf(self):
         reader = Reader();
         docs = reader.read_text('docs.txt')
-        qrys = reader.read_text('test.txt')
+        qrys = reader.read_text('qrys.txt')
         stop_words = reader.read_text('english.stop')
 
         # breaks the files into separate lines (queries and docs)
@@ -51,7 +51,7 @@ class tfidf:
 
             collection_len += text_size[doc_id]
 
-        self.collection_size = len(docs_list)
+        self.collection_size = len(docs_list)-1
         self.avg_doc_len = collection_len/self.collection_size
 
         qrys_terms = {}
@@ -78,11 +78,11 @@ class tfidf:
                             tfd = doc_dict[doc_id]
                             df = len(global_vocab[term])
                             idf = math.log(self.collection_size/df)
-                            norm_tf = tfq * idf* (tfd/(tfd + self.k*doc_len/self.avg_doc_len))
+                            norm_tf = tfq * idf * (tfd/(tfd + self.k*doc_len/self.avg_doc_len))
                             term_score = norm_tf*idf
                             score+=term_score
 
-                self.scores.append(query_id+" 0 "+doc_id+ " 0 " + str(score) + " 0 \n")
+                self.scores.append(query_id+" 0 "+doc_id+ " 0 " + str(round(score)) + " 0 \n")
 
         reader.save_scores(self.scores, 'test.top')
 
