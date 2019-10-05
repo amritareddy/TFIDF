@@ -11,7 +11,7 @@ class tfidf:
     def tfidf(self):
         reader = Reader();
         docs = reader.read_text('docs.txt')
-        qrys = reader.read_text('test.txt')
+        qrys = reader.read_text('qrys.txt')
 
         # breaks the files into separate lines (queries and docs)
         docs_list = reader.lines(docs)
@@ -26,7 +26,6 @@ class tfidf:
             tokens = reader.tokenize(doc)
             if(len(tokens) > 0):
                 doc_id = tokens[0]
-                # del tokens[0]
                 text_size[doc_id] = len(tokens)
                 collection_len += len(tokens)
 
@@ -48,7 +47,6 @@ class tfidf:
             tokens = reader.tokenize(qry)
             if(len(tokens) > 0):
                 qry_id = tokens[0]
-                # del tokens[0]
                 qrys_terms[qry_id] = reader.get_word_counts(tokens)
 
         for query_id, query_dict in qrys_terms.items():
@@ -68,3 +66,5 @@ class tfidf:
                 self.scores.append(query_id+" 0 "+doc_id+ " 0 " + str(score) + " 0 \n")
 
         reader.save_scores(self.scores, 'tfidf.top')
+t = tfidf()
+t.tfidf()

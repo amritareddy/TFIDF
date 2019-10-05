@@ -11,13 +11,13 @@ class tfidf:
     def tfidf(self):
         reader = Reader();
         docs = reader.read_text('docs.txt')
-        qrys = reader.read_text('qrys.txt')
+        qrys = reader.read_text('test.txt')
         stop_words = reader.read_text('english.stop')
 
         # breaks the files into separate lines (queries and docs)
         docs_list = reader.lines(docs)
         qrys_list = reader.lines(qrys)
-        stop_words_list = reader.lines(stop_words)
+        stop_words_list = reader.tokenize(stop_words)
 
         global_vocab = {}
         text_size = {}
@@ -36,7 +36,7 @@ class tfidf:
                         if token == "references":
                             break;
 
-                        if(len(token) > 14):
+                        if len(token) > 14:
                             token = token[0:14]
 
                         text_size[doc_id]+=1;
