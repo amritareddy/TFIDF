@@ -1,0 +1,53 @@
+
+Files:
+
+reader.py - helper class used to read the file, tokenize and normalize text, get the word counts of
+ types and save text into a file. We created this class from code that we used for Lab2.
+
+overlap.py - implements an algorithms that uses overlap scores
+
+tfidf.py - implements an algorithm that uses tfidf scores
+
+best.py - modified tfidf algorithm
+
+overlap.top - scores generated using overlap.py and docs.txt and qrys.txt
+tfidf.top - scores generated using tfidf.py and docs.txt and qrys.txt
+best.top - scores generated using best.py and docs.txt and qrys.txt
+
+english.stop - list of stop words that were removed in our implementation of best
+
+
+Psudocode and notes used by us: 
+
+- for the next part we need:
+  - tf ( term freq, per doc, via dictionary):
+    Have the following structure:
+      Global Dictionary:
+        key     value
+        "cat"   [<doc id, tf>, <doc id, tf>....]
+
+  - |D| the length of specific document (where should it be saved?)
+        - a dictionary? where key = doc id, value |D|
+
+  - avg|D| - the average of the lengths of all the documents
+           -  constant, calculate in advance
+
+  - |N| - length of the collection
+          - constant, calculate in advance
+
+  - df - the num of docs where this term occurs, length of the list
+
+  - k = 2
+    - constant, set in the beginning - done
+
+df dictionary:
+when did lines - do tokens, length of the tokens list + id
+
+How to create a Global Dict(GD)?
+
+- go through all docs. If a term is in doc. Is it in GD?
+It is. Take the last tuple of the list (cause we do it sequentially)
+  Does the id of the doc match current id?
+  Yes! - then change tuple <id, tf> => <id, tf+1>
+  No - then append a new tuple to the list
+no: add a new key with value [(doc id, tf)]

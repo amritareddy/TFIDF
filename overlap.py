@@ -1,3 +1,5 @@
+#Masha and Amrita, October 2019
+
 import string
 from reader import Reader
 
@@ -56,3 +58,6 @@ class Overlap:
             # qry[word] * doc.get(word,0)
 
         return score
+
+overlap = Overlap()
+overlap.overlap()
