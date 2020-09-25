@@ -8,7 +8,7 @@ overlap.py - implements an algorithms that uses overlap scores
 
 tfidf.py - implements an algorithm that uses tfidf scores
 
-best.py - modified tfidf algorithm
+best.py - modified tfidf algorithm (performed best on dataset)
 
 overlap.top - scores generated using overlap.py and docs.txt and qrys.txt
 tfidf.top - scores generated using tfidf.py and docs.txt and qrys.txt
