@@ -1,5 +1,5 @@
 
-#Files:
+Files:
 
 reader.py - helper class used to read the file, tokenize and normalize text, get the word counts of
  types and save text into a file. 
