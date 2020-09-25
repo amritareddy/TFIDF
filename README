@@ -1,9 +1,9 @@
 
-Files:
+#Files:
 
 reader.py - helper class used to read the file, tokenize and normalize text, get the word counts of
- types and save text into a file. We created this class from code that we used for Lab2.
-
+ types and save text into a file. 
+ 
 overlap.py - implements an algorithms that uses overlap scores
 
 tfidf.py - implements an algorithm that uses tfidf scores
